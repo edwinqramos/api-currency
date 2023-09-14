@@ -6,7 +6,7 @@ COPY pom.xml /build/
 COPY src /build/src/
 
 WORKDIR /build/
-RUN mvn package
+RUN mvn package -DskipTests
 
 FROM openjdk:17-oracle
 

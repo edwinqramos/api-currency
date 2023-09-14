@@ -19,6 +19,7 @@ public class CurrencyApplication implements CommandLineRunner {
 
 	@Autowired
 	private ReactiveMongoTemplate mongoTemplate;
+
 	private static final Logger log = LoggerFactory.getLogger(CurrencyApplication.class);
 
 	public static void main(String[] args) {
@@ -31,14 +32,12 @@ public class CurrencyApplication implements CommandLineRunner {
 
 		mongoTemplate.dropCollection("currency_changes").subscribe();
 
-
 		CurrencyChange currency1 = CurrencyChange.builder().monedaOrigen("SOL").monedaDestino("DOL").factorCambio(1/3.701).build();
 		CurrencyChange currency2 = CurrencyChange.builder().monedaOrigen("SOL").monedaDestino("EU").factorCambio(1/3.98).build();
 		CurrencyChange currency3 = CurrencyChange.builder().monedaOrigen("DOL").monedaDestino("SOL").factorCambio(3.701).build();
 		CurrencyChange currency4 = CurrencyChange.builder().monedaOrigen("DOL").monedaDestino("EU").factorCambio(1/1.07).build();
 		CurrencyChange currency5 = CurrencyChange.builder().monedaOrigen("EU").monedaDestino("DOL").factorCambio(1.07).build();
 		CurrencyChange currency6 = CurrencyChange.builder().monedaOrigen("EU").monedaDestino("SOL").factorCambio(3.98).build();
-
 
 		Flux.just(currency1, currency2, currency3, currency4, currency5, currency6)
 				.flatMap(currencyService::save)
